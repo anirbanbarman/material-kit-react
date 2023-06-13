@@ -17,7 +17,8 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 
-export const CustomersTable = (props) => {
+export const InventoriesTable = (props) => {
+  console.log(props)
   const {
     count = 0,
     items = [],
@@ -56,31 +57,31 @@ export const CustomersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                Business
                 </TableCell>
                 <TableCell>
-                  Email
+                  Cycle
                 </TableCell>
                 <TableCell>
-                  Location
+                  Horizon
                 </TableCell>
                 <TableCell>
-                  Phone
+                Risk type
                 </TableCell>
                 <TableCell>
-                  Signed Up
+                Severity
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+              {items.map((inventory) => {
+                const isSelected = selected.includes(inventory.risk_item_id);
+           
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={inventory.id}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
@@ -88,9 +89,9 @@ export const CustomersTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.id);
+                            onSelectOne?.(inventory.risk_item_id);
                           } else {
-                            onDeselectOne?.(customer.id);
+                            onDeselectOne?.(inventory.risk_item_id);
                           }
                         }}
                       />
@@ -101,25 +102,24 @@ export const CustomersTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
+                        
                         <Typography variant="subtitle2">
-                          {customer.name}
+                        {inventory?.business?.business_core}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                    { inventory?.cycle?.effective_date}
+                 </TableCell>
+                    <TableCell>
+                    {inventory?.horizon?.display}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                    {inventory?.risk_type?.Level_one}
+                 
                     </TableCell>
                     <TableCell>
-                      {customer.phone}
-                    </TableCell>
-                    <TableCell>
-                      {createdAt}
+                    {inventory?.severity?.display}
                     </TableCell>
                   </TableRow>
                 );
@@ -141,7 +141,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+InventoriesTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,
